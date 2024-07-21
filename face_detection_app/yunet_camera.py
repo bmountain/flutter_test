@@ -37,26 +37,6 @@ class Video(object):
     def __del__(self):
         # カメラを閉じる
         self.video.release()
-    def get_frame(self):
-        # カメラから画像データを取得．ret (boolean): 取得の成否，frame: 画像を表現するndarray (行数x列数x3色)
-        ret,frame=self.video.read()
-        frame = cv2.flip(frame, 1)
-        height, width = frame.shape[:2]
-        faceDetect.setInputSize((width, height))
-        # 検出された顔のリストを取得．各顔はx (左下のx座標)，y (左下のy座標), w (幅), h (高さ)で表現される
-        _, faces = faceDetect.detect(frame)
-        faces = faces if faces is not None else []
-        faces = [list(map(int, face[:4])) for face in faces]
-        print('faces:', faces)
-        # すべての顔に枠を付ける
-        for face in faces:
-            # 枠を画像に書き込む．パラメタ：画像，頂点，色，太さ
-            cv2.rectangle(frame, face, (192,192,192), 2)
-        # 画像をメモリバッファに書き込む
-        _, jpg=cv2.imencode('.jpg', frame)
-
-        # 画像(ndarray)をbyteに変換
-        return jpg.tobytes()
     def get_frame_overlay(self):
         # カメラからフレームを取得．ret (boolean): 取得の成否，frame: 画像を表現するndarray (行数x列数x3色)
         _, frame=self.video.read()
