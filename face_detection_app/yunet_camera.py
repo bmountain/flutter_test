@@ -1,8 +1,9 @@
 import cv2
 
-# 顔検出モデルの読み込み
+# 顔検出モデルの設定
 weights = 'face_detection_yunet_2023mar.onnx'
-faceDetect = cv2.FaceDetectorYN.create(weights, '', (0, 0))
+score_threshold = 0.5
+faceDetect = cv2.FaceDetectorYN.create(weights, '', (0, 0), score_threshold=score_threshold)
 # 画像パス
 img_path = 'laughing.png'
 # オーバーレイする画像のサイズのパラメタ
