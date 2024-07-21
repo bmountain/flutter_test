@@ -1,5 +1,5 @@
 from flask import Flask, render_template, Response
-from camera import Video
+from yunet_camera import Video
 
 app=Flask(__name__)
 
@@ -11,7 +11,7 @@ def index():
 # 表示する画像を含むHTTP responseを逐次出力するジェネレータ
 def gen(camera):
     while True:
-        frame=camera.get_frame()
+        frame=camera.get_frame_overlay()
         yield(b'--frame\r\n'
        b'Content-Type:  image/jpeg\r\n\r\n' + frame +
          b'\r\n\r\n')
